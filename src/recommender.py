@@ -40,7 +40,7 @@ class Recommender:
         sim = cosine_similarity(self.user_item_matrix.T.values)
         self.item_similarity = pd.DataFrame(
             sim,
-            index=self.user_item_matrix.columns
+            index=self.user_item_matrix.columns,
             columns=self.user_item_matrix.columns,
         )
         return self.item_similarity
