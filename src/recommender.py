@@ -59,4 +59,20 @@ class Recommender:
 
         neighbor_ratings = self.user_item_matrix.loc[top_neighbors.index]
 
+        weighted_sum = neighbor_ratings.T.dot(top_neighbors)
+        sim_sum = top_neighbors.sum()
+
+        if sim_sum == 0:
+            scores = pd.Series(0,index=neighbor_ratings.columns)
+        else:
+            scores = weighted_sum / sim_sum
+        
+        scores = scores.drop(labels=[i for i in rated_items if i in scores.index])
+
+        scores = scores[scores > 0].sort_values(ascending=False).head(top_n)
+
+        return self._format_recommendations(scores, method="user_based")
+    
+    
+
         ### Gonna continue tomorrow...
