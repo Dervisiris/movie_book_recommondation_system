@@ -74,5 +74,34 @@ class Recommender:
         return self._format_recommendations(scores, method="user_based")
     
     
+    def recommend_item_based(self, user_id: int, top_n: int = 5):
+        if self.item_similarity is None:
+            self.compute_item_similarity()
+        if user_id not in self.user_item_matrix.index:
+            raise ValueError(f"user_id:{user_id} could not found in data set.")
+        user_ratings = self.user_item_matrix.loc[user_id]
+        rated_items = user_ratings[user_ratings > 0]
 
-        ### Gonna continue tomorrow...
+        if rated_items.empty:
+            return pd.DataFrame(columns=["item_id","title","category","type","score"])
+        
+        sim_matrix = self.item_similarity
+        scores = sim_matrix[rated_items.index].dot(rated_items) / (sim_matrix[rated_items.index].abs().sum(axis=1) + 1e-9)
+
+        scores = scores.drop(labels=rated_items.index,errors="ignore")
+        scores =scores[scores > 0].sort_values(ascending=False).head(top_n)
+        
+        return self._format_recommendations(scores, method= "item_based")
+    
+    def _format_recommendations(self, scores: pd.Series,method:str):
+        if scores.empty:
+            return pd.DataFrame(columns=["item_id","title","category","type","score","method"])
+        df = scores.reset_index()
+        df.columns = ["item_id","score"]
+        df = df.merge(self.items,on="item_id",how="left")
+        df["score"] = df["score"].round(3)
+        df["method"] = method
+
+        return df[["item_id","title","category","type","year","score","method"]]
+    
+
