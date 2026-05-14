@@ -1,0 +1,29 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# Virtual environments
+venv/
+env/
+.venv/
+.env
+
+# IDE
+.vscode/
+.idea/
+*.swp
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Outputs (will be regenerated each run)
+outputs/recommendations.csv
+outputs/charts/*.png
+
+# Keep the folders themselves
+!outputs/.gitkeep
+!outputs/charts/.gitkeep

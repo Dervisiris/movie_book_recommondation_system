@@ -18,6 +18,7 @@ class Recommender:
         self.user_item_matrix = self.ratings.pivot_table(
             index="user_id",
             columns="item_id",
+            values="rating",
             fill_value=fill_value,
         )
         return self.user_item_matrix

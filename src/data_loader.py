@@ -23,7 +23,7 @@ class DataLoader:
         self.ratings = pd.read_csv(self.ratings_path)
         self.items = pd.read_csv(self.items_path)
         
-        return self.items, self.ratings
+        return self.ratings, self.items
     
 
     def clean(self, min_rating: int = 1, max_rating: int = 5):
@@ -34,6 +34,10 @@ class DataLoader:
         before = len(self.ratings)
         self.ratings = self.ratings.dropna(subset = ["user_id","item_id","rating"])
 
+        self.ratings = self.ratings[
+        (self.ratings["rating"] >= min_rating)
+        & (self.ratings["rating"] <= max_rating)
+        ]
 
         self.ratings = (
             self.ratings.groupby(["user_id","item_id"],as_index =False)

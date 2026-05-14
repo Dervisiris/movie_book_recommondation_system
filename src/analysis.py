@@ -54,7 +54,7 @@ class Analyzer:
         plt.xlabel("Number of Point")
         plt.tight_layout()
         plt.savefig(path,dpi=120)
-        plt.close
+        plt.close()
         return path
     
     def top_rated_items_chart(self,top_n: int = 10):
@@ -75,7 +75,7 @@ class Analyzer:
         plt.close()
         return path
     
-    
+
 
 
 
