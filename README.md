@@ -109,5 +109,4 @@ Connects all the modules together and gives an interactive menu.
 ## Next Steps
 
 The next step is to turn this project into a real application using
-**FastAPI** for the backend and **Flutter** for the user interface (web and
-mobile). I will keep updating this repository.
+**FastAPI** for the backend and **Flutter** for the user interface. I will keep updating this repository.
